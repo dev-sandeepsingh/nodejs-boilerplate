@@ -1,4 +1,4 @@
-const newrelic = require('newrelic');
+// const newrelic = require('newrelic');
 const {
   errorCodes: { internalServerErrorCode },
   ApiError,
@@ -19,7 +19,7 @@ const createErrorRoute = ({ reportError }) => (error, req, res, next) => {
       });
 
   // stringify details, because newrelic seems not to add custom parameters that are of type object
-  newrelic.addCustomAttributes({ code, details: JSON.stringify(details) });
+  // newrelic.addCustomAttributes({ code, details: JSON.stringify(details) });
 
   res.status(status);
   res.send({

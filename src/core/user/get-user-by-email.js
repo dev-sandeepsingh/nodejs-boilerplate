@@ -1,10 +1,21 @@
+const {
+  JobNotFoundError,
+} = require('../../common/errors.js');
+
 const createGetUserByEmail = ({ sequelize }) => {
   const {
     models: { User },
   } = sequelize;
 
-  const getUserByEmail = async (email) => {
-    return User.findOne({ email });    
+  const getUserByEmail = async ({ email }) => {
+    const user = User.findOne({ where: { email: email } });
+
+    if (!user) {
+      throw new JobNotFoundError();
+    }
+
+
+    return user;
   };
   return getUserByEmail;
 };

@@ -8,6 +8,9 @@ const config = require('../../config.js');
 const { createUsersRoute } = require('./routes/users/index.js');
 const { createCore } = require('../../core/index.js');
 const { createApplication } = require('../../application/index.js');
+const { createNotFoundRoute } = require('./routes/not-found.js');
+const { createUriErrorRoute } = require('./routes/uri-error.js');
+const { createErrorRoute } = require('./routes/error.js');
 
 const createApp = ({
   reportError,
@@ -26,7 +29,14 @@ const createApp = ({
 
   const app = express();
 
+  const notFoundRoute = createNotFoundRoute();
+  const uriErrorRoute = createUriErrorRoute();
+  const errorRoute = createErrorRoute({ reportError });
+
+  
   const usersRoute = createUsersRoute({ core, application });
+
+
 
   // if (config.docs.username && config.docs.password) {
   //   app.use('/docs', [
@@ -46,26 +56,32 @@ const createApp = ({
   app.use('/docs', express.static(path.resolve(__dirname, '../../../apidoc')));
   
 
-  app.use(
-    cors({
-      origin: corsOrigin,
-      methods: ['POST', 'GET', 'PATCH', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
-      exposedHeaders: ['X-CSRF-Token'],
-      credentials: true,
-    }),
-  );
+  // app.use(
+  //   cors({
+  //     origin: corsOrigin,
+  //     methods: ['POST', 'GET', 'PATCH', 'DELETE'],
+  //     allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
+  //     exposedHeaders: ['X-CSRF-Token'],
+  //     credentials: true,
+  //   }),
+  // );
 
-  const isProd = process.env.NODE_ENV === 'production';
-  if (isProd) {
-    app.set('trust proxy', true);
-  }
+  // const isProd = process.env.NODE_ENV === 'production';
+  // if (isProd) {
+  //   app.set('trust proxy', true);
+  // }
   
   app.use(bodyParser.json());
   app.use(bodyParserJsonError());
 
+  
+
   app.use('/users', usersRoute);
   app.get('/', (req, res) => res.sendStatus(200));
+
+  app.use(notFoundRoute);
+  app.use(uriErrorRoute);
+  app.use(errorRoute);
 
   return app;
 };

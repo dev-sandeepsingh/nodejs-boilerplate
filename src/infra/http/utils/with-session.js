@@ -1,4 +1,4 @@
-const newrelic = require('newrelic');
+// const newrelic = require('newrelic');
 const { withCsrfToken } = require('./csrf');
 const { ROLES } = require('../../../core/user');
 const {
@@ -18,7 +18,7 @@ const withSession = [
       throw new ApiError({ code: unauthorizedErrorCode });
     }
 
-    newrelic.addCustomAttributes({ userId });
+    // newrelic.addCustomAttributes({ userId });
 
     // drivers are using mobile app only, so no CSRF protection required
     if (role === ROLES.driver || !csrfProtection) {
