@@ -4,7 +4,7 @@ const env = process.env.NODE_ENV || 'development';
 
 const config = {
   development: {
-    port: 3001,    
+    port: process.env.PORT || 8080,    
     rollbarAccessToken: null,
     reportErrorRequest: false,      
     cors: {

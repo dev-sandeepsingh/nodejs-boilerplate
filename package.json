@@ -21,6 +21,9 @@
     "url": "https://github.com/Sandeeplpu/nodejs-boilerplate/issues"
   },
   "homepage": "https://github.com/Sandeeplpu/nodejs-boilerplate#readme",
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
