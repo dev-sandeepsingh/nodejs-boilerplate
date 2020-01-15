@@ -1,4 +1,4 @@
-const check = require('express-validator/check');
+const check = require('express-validator');
 // const { validateInput } = require('../../utils/validate-input.js');
 const { 
   toApiResponse,
