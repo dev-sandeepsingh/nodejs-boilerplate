@@ -21,7 +21,7 @@ const config = {
     },    
   },
   production: {
-    port: 3000,    
+    port: process.env.PORT,    
     rollbarAccessToken: process.env.ROLLBAR_ACCESS_TOKEN,
     reportErrorRequest: true,
     
