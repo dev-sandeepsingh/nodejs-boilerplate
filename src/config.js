@@ -21,7 +21,7 @@ const config = {
     },    
   },
   production: {
-    port: process.env.PORT,    
+    port: process.env.PORT || 8080,
     rollbarAccessToken: process.env.ROLLBAR_ACCESS_TOKEN,
     reportErrorRequest: true,
     
