@@ -24,7 +24,7 @@ const config = {
     },
   },
   production: {
-    url: process.env.DATABASE_URL,
+    url: `postgres://postgres:sandeep@localhost:5432/nodejs-boilerplate`,
     sync: false,
     logging: false,
     ssl: true,
