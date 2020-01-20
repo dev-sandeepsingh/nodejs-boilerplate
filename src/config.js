@@ -5,12 +5,12 @@ const env = process.env.NODE_ENV || 'development';
 const config = {
   development: {
     port: process.env.PORT || 8080,    
-    rollbarAccessToken: null,
+    rollbarAccessToken: process.env.ROLLBAR_ACCESS_TOKEN,
     reportErrorRequest: false,      
     cors: {
-      origin: ['http://localhost:3000'],
+      origin: ['http://localhost:8080'],
     },    
-    origin: 'http://localhost:3000',    
+    origin: 'http://localhost:8080',
   },
   test: {
     port: 3000,

@@ -6,16 +6,18 @@ const env = process.env.NODE_ENV || 'development';
 
 const config = {
   development: {
-    url: `postgres://postgres:sandeep@localhost:5432/nodejs-boilerplate`,
+    url: process.env.DATABASE_URL,
     sync: false,
     logging: console.log(), // eslint-disable-line no-console,
-    ssl: yn(process.env.DATABASE_SSL),
+    ssl: true,
     dialectOptions: {
-      ssl: yn(process.env.DATABASE_SSL),
+      ssl: true,
     },
+    rollbarAccessToken: process.env.ROLLBAR_ACCESS_TOKEN,
+    reportErrorRequest: true,
   },
   test: {
-    url: '`postgres://postgres:sandeep@localhost:5432/nodejs-boilerplate-test`,',
+    url: process.env.DATABASE_URL,
     sync: process.env.SYNC_DATABASE || false,
     logging: false,
     ssl: false,
@@ -31,6 +33,8 @@ const config = {
     dialectOptions: {
       ssl: true,
     },
+    rollbarAccessToken: process.env.ROLLBAR_ACCESS_TOKEN,
+    reportErrorRequest: true,
   },
 };
 
