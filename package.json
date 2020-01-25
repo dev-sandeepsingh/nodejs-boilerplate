@@ -38,9 +38,10 @@
     "pg": "^7.17.0",
     "rollbar": "^2.14.4",
     "sequelize": "^5.21.3",
-    "yn": "^4.0.0"
+    "yn": "^4.0.0",
+    "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
-    "sequelize-cli": "^5.5.1"
+    
   }
 }
