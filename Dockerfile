@@ -14,7 +14,7 @@ RUN npm install --only=production
 # Copy local code to the container image.
 COPY . ./
 
-ENTRYPOINT [ "npm", "run db:migrate" ]
+ENTRYPOINT [ "run", "sequelize db:migrate" ]
 
 # Run the web service on container startup.
 CMD [ "npm", "start" ]
