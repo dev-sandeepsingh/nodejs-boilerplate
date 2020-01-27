@@ -21,7 +21,7 @@ steps:
           "--platform",
           "managed",
           "--memory",
-          "128Mi",
+          "128Mi"
         ]
 images:
   - gcr.io/$PROJECT_ID/nodejs-boilerplate
