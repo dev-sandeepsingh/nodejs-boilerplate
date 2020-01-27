@@ -16,9 +16,7 @@ COPY . ./
 
 ENV NODE_ENV "production"
 
-ENTRYPOINT ["/usr/src/app/node_modules/.bin/sequelize db:migrate" ]
-
-#ENTRYPOINT /usr/src/app/node_modules/.bin/sequelize db:migrate
+ENTRYPOINT /usr/src/app/node_modules/.bin/sequelize db:migrate
 
 # Run the web service on container startup.
 CMD [ "npm", "start" ]
