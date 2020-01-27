@@ -25,8 +25,8 @@ const config = {
       ssl: false,
     },
   },
-  production: {
-    url: process.env.DATABASE_URL,
+  production: {    
+    url: 'postgres://qlusiissztrnvu:7ff1143faf77f1549c0fa1a4e056ad2d55e87758500cde2a5b732800e8d0daa8@ec2-46-137-188-105.eu-west-1.compute.amazonaws.com:5432/df7d5qoflm41sc',
     sync: false,
     logging: false,
     ssl: true,
