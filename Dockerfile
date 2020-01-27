@@ -14,7 +14,7 @@ RUN npm install --only=production
 # Copy local code to the container image.
 COPY . ./
 
-ENV NODE_ENV "${NODE_ENV}"
+ENV NODE_ENV "production"
 
 #ENTRYPOINT ["/usr/src/app/node_modules/.bin/sequelize db:migrate" ]
 

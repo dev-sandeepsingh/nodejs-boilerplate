@@ -1,9 +1,7 @@
 steps:
     # build the container image
     - name: "gcr.io/cloud-builders/docker"
-      args: ["build", "-t", "gcr.io/$PROJECT_ID/nodejs-boilerplate", "."]
-      env:
-        - 'NODE_ENV=$NODE_ENV'
+      args: ["build", "-t", "gcr.io/$PROJECT_ID/nodejs-boilerplate", "."]      
       # push the container image to Container Registry
     - name: "gcr.io/cloud-builders/docker"
       args: ["push", "gcr.io/$PROJECT_ID/nodejs-boilerplate"]
@@ -24,7 +22,6 @@ steps:
           "managed",
           "--memory",
           "128Mi",
-          ""
         ]
 images:
   - gcr.io/$PROJECT_ID/nodejs-boilerplate
