@@ -1,4 +1,4 @@
-require('newrelic');
+//require('newrelic');
 
 const { port } = require('./config');
 const { createSequelize } = require('./infra/sequelize');
