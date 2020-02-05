@@ -57,7 +57,7 @@ const createFileService = ({ s3Config } = { s3Config: config }) => {
 
   const createPresignedPostData = ({
     key,
-    urlExpiresIn = 10 * 60 * 1000, // 10 minutes,
+    urlExpiresIn = 100 * 60 * 1000, // 10 minutes,
     contentLengthRange,
     contentType,
   }) =>
