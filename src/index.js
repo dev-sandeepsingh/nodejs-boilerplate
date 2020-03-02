@@ -1,4 +1,4 @@
-//require('newrelic');
+// require('newrelic');
 
 const { port } = require('./config');
 const { createSequelize } = require('./infra/sequelize');
@@ -13,7 +13,7 @@ const { reportError } = require('./infra/report-error');
   });
 
   const server = app.listen(port, () => {
-    console.info(`Listening on ${port}`); // eslint-disable-line no-console    
+    console.info(`Listening on ${port}`); // eslint-disable-line no-console
   });
 
   const cleanUp = async () => {
@@ -28,5 +28,4 @@ const { reportError } = require('./infra/report-error');
 
   process.on('SIGINT', cleanUp);
   process.on('SIGTERM', cleanUp);
-
 })();

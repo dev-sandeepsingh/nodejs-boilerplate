@@ -4,11 +4,10 @@ const createAddUser = ({ sequelize }) => {
   } = sequelize;
 
   const addUser = async ({ email }) => {
-
     const user = User.create({
-      email
+      email,
     });
-    
+
     return user;
   };
   return addUser;

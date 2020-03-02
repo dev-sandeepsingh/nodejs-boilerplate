@@ -15,7 +15,7 @@ const createUserModel = (sequelize, { STRING, INTEGER }) => {
         validate: {
           isEmail: true,
         },
-      },      
+      },
     },
     {
       freezeTableName: true,

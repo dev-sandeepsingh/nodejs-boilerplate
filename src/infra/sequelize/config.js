@@ -1,17 +1,19 @@
-require('dotenv').config;
+const dotenv = require('dotenv').config;
 const yn = require('yn');
 
+dotenv.load();
 
 const env = process.env.NODE_ENV || 'development';
 
 const config = {
   development: {
-    url: 'postgres://qlusiissztrnvu:7ff1143faf77f1549c0fa1a4e056ad2d55e87758500cde2a5b732800e8d0daa8@ec2-46-137-188-105.eu-west-1.compute.amazonaws.com:5432/df7d5qoflm41sc',
+    url:
+      'postgres://qlusiissztrnvu:7ff1143faf77f1549c0fa1a4e056ad2d55e87758500cde2a5b732800e8d0daa8@ec2-46-137-188-105.eu-west-1.compute.amazonaws.com:5432/df7d5qoflm41sc',
     sync: false,
     logging: console.log(), // eslint-disable-line no-console,
     ssl: true,
     dialectOptions: {
-      ssl: true,
+      ssl: yn(process.env.DATABASE_SSL),
     },
     rollbarAccessToken: process.env.ROLLBAR_ACCESS_TOKEN,
     reportErrorRequest: true,
@@ -25,8 +27,9 @@ const config = {
       ssl: false,
     },
   },
-  production: {    
-    url: 'postgres://qlusiissztrnvu:7ff1143faf77f1549c0fa1a4e056ad2d55e87758500cde2a5b732800e8d0daa8@ec2-46-137-188-105.eu-west-1.compute.amazonaws.com:5432/df7d5qoflm41sc',
+  production: {
+    url:
+      'postgres://qlusiissztrnvu:7ff1143faf77f1549c0fa1a4e056ad2d55e87758500cde2a5b732800e8d0daa8@ec2-46-137-188-105.eu-west-1.compute.amazonaws.com:5432/df7d5qoflm41sc',
     sync: false,
     logging: false,
     ssl: true,

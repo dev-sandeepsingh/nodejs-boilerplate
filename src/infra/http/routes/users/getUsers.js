@@ -2,7 +2,9 @@ const { toApiResponse } = require('../../utils/response.js');
 
 const createGetUsersRoute = ({
   router,
-  application: { users: { getUsers } }
+  application: {
+    users: { getUsers },
+  },
 }) => {
   /**
    * @api {get} /users/getUsers Get users
@@ -13,7 +15,7 @@ const createGetUsersRoute = ({
    */
   router.get(
     '/getUsers',
-    toApiResponse(async req => {
+    toApiResponse(async () => {
       const users = await getUsers();
 
       return {

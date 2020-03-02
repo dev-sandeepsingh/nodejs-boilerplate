@@ -8,8 +8,8 @@ module.exports = {
         autoIncrement: true,
       },
       test: {
-        type: STRING,        
-      },      
+        type: STRING,
+      },
     }),
   down: queryInterface => queryInterface.dropTable('Test2'),
 };

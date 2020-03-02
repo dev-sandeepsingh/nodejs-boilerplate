@@ -10,8 +10,7 @@ const createSequelize = async ({
   operatorsAliases,
   ssl,
   dialectOptions,
-} = config) => {  
-
+} = config) => {
   // initialize the connection
   const sequelize = new Sequelize(url, {
     dialect: 'postgres',
@@ -23,7 +22,6 @@ const createSequelize = async ({
 
   // create models
   const User = createUserModel(sequelize, Sequelize);
-  
 
   const models = {
     User,
@@ -44,7 +42,7 @@ const createSequelize = async ({
   return {
     db: sequelize,
     models,
-    close: () => sequelize.connectionManager.close(),    
+    close: () => sequelize.connectionManager.close(),
   };
 };
 

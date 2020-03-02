@@ -4,10 +4,8 @@ const createGetUsers = ({
   },
 }) => {
   const getUsers = async () => {
-
     const users = await User.findAll();
     return users;
-    
   };
 
   return getUsers;

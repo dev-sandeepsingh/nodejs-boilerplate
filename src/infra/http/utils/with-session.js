@@ -1,5 +1,5 @@
 // const newrelic = require('newrelic');
-const { withCsrfToken } = require('./csrf');
+// const { withCsrfToken } = require('./csrf');
 const { ROLES } = require('../../../core/user');
 const {
   ApiError,
@@ -23,10 +23,9 @@ const withSession = [
     // drivers are using mobile app only, so no CSRF protection required
     if (role === ROLES.driver || !csrfProtection) {
       next();
-      return;
     }
 
-    withCsrfToken(req, res, next);
+    // withCsrfToken(req, res, next);
   },
   (error, req, res, next) => {
     if (error.code === 'EBADCSRFTOKEN') {

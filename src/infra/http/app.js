@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
-const cors = require('cors');
+// const cors = require('cors');
 const bodyParser = require('body-parser');
 const bodyParserJsonError = require('express-body-parser-json-error');
-const config = require('../../config.js');
+// const config = require('../../config.js');
 
 const { createUsersRoute } = require('./routes/users/index.js');
 const { createCore } = require('../../core/index.js');
@@ -14,18 +14,17 @@ const { createErrorRoute } = require('./routes/error.js');
 
 const createApp = ({
   reportError,
-  config: { cors: { origin: corsOrigin } } = config,  
+  // config: { cors: { origin: corsOrigin } } = config,
   sequelize = {},
   application = {},
-  core,  
+  core,
 }) => {
   core = core || createCore({ sequelize }); // eslint-disable-line no-param-reassign
   // eslint-disable-next-line no-param-reassign
-  application = Object.assign(
-    {},
-    createApplication({ sequelize, core }),
-    application,
-  );
+  application = {
+    ...createApplication({ sequelize, core }),
+    ...application,
+  };
 
   const app = express();
 
@@ -33,10 +32,7 @@ const createApp = ({
   const uriErrorRoute = createUriErrorRoute();
   const errorRoute = createErrorRoute({ reportError });
 
-  
   const usersRoute = createUsersRoute({ core, application });
-
-
 
   // if (config.docs.username && config.docs.password) {
   //   app.use('/docs', [
@@ -54,7 +50,6 @@ const createApp = ({
   //   ]);
   // }
   app.use('/docs', express.static(path.resolve(__dirname, '../../../apidoc')));
-  
 
   // app.use(
   //   cors({
@@ -70,11 +65,9 @@ const createApp = ({
   // if (isProd) {
   //   app.set('trust proxy', true);
   // }
-  
+
   app.use(bodyParser.json());
   app.use(bodyParserJsonError());
-
-  
 
   app.use('/users', usersRoute);
   app.get('/', (req, res) => res.sendStatus(200));

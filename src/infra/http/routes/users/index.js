@@ -8,7 +8,7 @@ const createUsersRoute = ({ core, application }) => {
 
   createGetUsersRoute({ router, application });
   createGetUserByEmailRoute({ router, core });
-  createAddUserRoute({ router, core })
+  createAddUserRoute({ router, core });
   return router;
 };
 

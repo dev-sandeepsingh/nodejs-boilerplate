@@ -1,12 +1,12 @@
 const check = require('express-validator');
 const { validateInput } = require('../../utils/validate-input.js');
-const {
-  toApiResponse,
-} = require('../../utils/response.js');
+const { toApiResponse } = require('../../utils/response.js');
 
 const createAddUserRoute = ({
   router,
-  core: { userCore: { addUser } }
+  core: {
+    userCore: { addUser },
+  },
 }) => {
   /**
    * @api {post} /user/addUser Add user
@@ -18,27 +18,12 @@ const createAddUserRoute = ({
    */
   router.post(
     '/addUser',
-    [
-      check
-        .body('email')
-        .isEmail(),
-    ],
+    [check.body('email').isEmail()],
     validateInput,
-    toApiResponse(
-      async ({
-        body: { email },
-      }) => {
-        try {
-          await addUser({
-            email,
-          });
-
-          return { status: 204, data: null };
-        } catch (error) {
-          throw error;
-        }
-      },
-    ),
+    toApiResponse(async ({ body: { email } }) => {
+      await addUser({ email });
+      return { status: 204, data: null };
+    }),
   );
 
   return router;
