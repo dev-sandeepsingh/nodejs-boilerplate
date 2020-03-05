@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
 // const cors = require('cors');
+const httpAuth = require('express-http-auth');
 const bodyParser = require('body-parser');
 const bodyParserJsonError = require('express-body-parser-json-error');
-// const config = require('../../config.js');
+const config = require('../../config.js');
 
 const { createUsersRoute } = require('./routes/users/index.js');
 const { createCore } = require('../../core/index.js');
@@ -34,21 +35,21 @@ const createApp = ({
 
   const usersRoute = createUsersRoute({ core, application });
 
-  // if (config.docs.username && config.docs.password) {
-  //   app.use('/docs', [
-  //     httpAuth.realm('Docs'),
-  //     ({ username, password }, res, next) => {
-  //       if (
-  //         username !== config.docs.username ||
-  //         password !== config.docs.password
-  //       ) {
-  //         res.sendStatus(401);
-  //         return;
-  //       }
-  //       next();
-  //     },
-  //   ]);
-  // }
+  if (config.docs.username && config.docs.password) {
+    app.use('/docs', [
+      httpAuth.realm('Docs'),
+      ({ username, password }, res, next) => {
+        if (
+          username !== config.docs.username ||
+          password !== config.docs.password
+        ) {
+          res.sendStatus(401);
+          return;
+        }
+        next();
+      },
+    ]);
+  }
   app.use('/docs', express.static(path.resolve(__dirname, '../../../apidoc')));
 
   // app.use(
@@ -61,10 +62,10 @@ const createApp = ({
   //   }),
   // );
 
-  // const isProd = process.env.NODE_ENV === 'production';
-  // if (isProd) {
-  //   app.set('trust proxy', true);
-  // }
+  const isProd = process.env.NODE_ENV === 'production';
+  if (isProd) {
+    app.set('trust proxy', true);
+  }
 
   app.use(bodyParser.json());
   app.use(bodyParserJsonError());
