@@ -1,13 +1,11 @@
-const dotenv = require('dotenv').config;
+require('dotenv').config; // eslint-disable-line no-unused-expressions
 const yn = require('yn');
-
-dotenv.load();
 
 const env = process.env.NODE_ENV || 'development';
 
 const config = {
   development: {
-    url:process.env.DATABASE_URL,
+    url: process.env.DATABASE_URL,
     sync: false,
     logging: console.log(), // eslint-disable-line no-console,
     ssl: true,
@@ -27,7 +25,7 @@ const config = {
     },
   },
   production: {
-    url:process.env.DATABASE_URL,
+    url: process.env.DATABASE_URL,
     sync: false,
     logging: false,
     ssl: true,

@@ -10,7 +10,12 @@ const config = {
     cors: {
       origin: ['http://localhost:8080'],
     },
+    docs: {
+      username: 'dev',
+      password: 'dev',
+    },
     origin: 'http://localhost:8080',
+    redisUrl: 'redis://localhost:6381',
   },
   test: {
     port: 3000,
@@ -19,6 +24,7 @@ const config = {
     cors: {
       origin: [],
     },
+    redisUrl: 'redis://localhost:6380',
   },
   production: {
     port: process.env.PORT || 8080,
@@ -28,6 +34,11 @@ const config = {
     cors: {
       origin: (process.env.CORS_ORIGIN || '').split(','),
     },
+    docs: {
+      username: process.env.DOCS_USERNAME,
+      password: process.env.DOCS_PASSWORD,
+    },
+    redisUrl: process.env.REDIS_URL,
   },
 };
 
