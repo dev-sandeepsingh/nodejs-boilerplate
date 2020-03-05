@@ -37,6 +37,22 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
+# docker postgres dev volume
+postgres
+
+# docker pgadmin dev volume
+pgadmin
+
+# docker redis dev volume
+redis
+
+# containers for local development
+docker-compose.yml
+
+# API docs generated with apidoc
+apidoc/*
+!apidoc/description.html
+
 # Dependency directories
 node_modules/
 jspm_packages/
@@ -67,6 +83,10 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# API docs generated with apidoc
+apidoc/*
+!apidoc/description.html
 
 # dotenv environment variables file
 .env
