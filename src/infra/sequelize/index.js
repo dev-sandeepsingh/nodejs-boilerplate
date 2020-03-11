@@ -43,6 +43,15 @@ const createSequelize = async ({
     db: sequelize,
     models,
     close: () => sequelize.connectionManager.close(),
+    truncate: async () => {
+      await User.truncate({ cascade: true });
+      await Promise.all(
+        Object.values(models)
+          // truncating HC and Driver (with a cascade) in parallel introduces deadlocks,
+          .filter(m => ![User].includes(m))
+          .map(model => model.truncate({ cascade: true })),
+      );
+    },
   };
 };
 
