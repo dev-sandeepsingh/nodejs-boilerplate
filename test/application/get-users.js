@@ -22,7 +22,7 @@ describe('Users#getUsers', () => {
 
   beforeEach(() =>
     sequelizeFixtures.loadFiles(
-      [path.join(__dirname, '../../fixtures/users.js')],
+      [path.join(__dirname, '../fixtures/users.js')],
       sequelize.models,
       { log: () => {} },
     ),
