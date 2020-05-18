@@ -47,7 +47,7 @@ pgadmin
 redis
 
 # containers for local development
-docker-compose.yml
+# docker-compose.yml
 
 # API docs generated with apidoc
 apidoc/*
