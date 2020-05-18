@@ -8,9 +8,9 @@ class AppError extends Error {
   }
 }
 
-class DemoError extends AppError {}
+class EmailAlreadyExistsError extends AppError {}
 
 module.exports = {
   AppError,
-  DemoError,
+  EmailAlreadyExistsError,
 };

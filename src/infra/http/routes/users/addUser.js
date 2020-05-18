@@ -1,6 +1,11 @@
 const check = require('express-validator');
 const { validateInput } = require('../../utils/validate-input.js');
-const { toApiResponse } = require('../../utils/response.js');
+const {
+  toApiResponse,
+  ApiError,
+  errorCodes: { emailAlreadyExistsErrorCode },
+} = require('../../utils/response.js');
+const { EmailAlreadyExistsError } = require('../../../../common/errors.js');
 
 const createAddUserRoute = ({
   router,
@@ -21,8 +26,20 @@ const createAddUserRoute = ({
     [check.body('email').isEmail()],
     validateInput,
     toApiResponse(async ({ body: { email } }) => {
-      await addUser({ email });
-      return { status: 204, data: null };
+      try {
+        await addUser({ email });
+
+        return { status: 204, data: null };
+      } catch (error) {
+        if (error instanceof EmailAlreadyExistsError) {
+          throw new ApiError({
+            status: 422,
+            code: emailAlreadyExistsErrorCode,
+            message: 'Email already exists.',
+          });
+        }
+        throw error;
+      }
     }),
   );
 
