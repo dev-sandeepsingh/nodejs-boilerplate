@@ -1,27 +1,18 @@
-FROM node
+FROM node:12
 
-# Create and change to the app directory.
+# Create app directory
 WORKDIR /usr/src/app
 
-# Copy application dependency manifests to the container image.
-# A wildcard is used to ensure both package.json AND package-lock.json are copied.
-# Copying this separately prevents re-running npm install on every code change.
-COPY package*.json ./
+ENV PORT=${PORT}
 
-# Install production dependencies.
-RUN npm install --only=production
+# # Bundle app source
+COPY . .
 
-# Copy local code to the container image.
-COPY . ./
+# env variables to .env file
+COPY .env.sample .env
 
-ENV NODE_ENV "production"
+# set the port
+#EXPOSE 5001
 
-ENTRYPOINT ["/usr/src/app/node_modules/.bin/sequelize","db:migrate"]
-
-# Run the web service on container startup.
-CMD [ "npm", "start" ]
-
-
-
-# ENTRYPOINT ["/usr/src/app/node_modules/.bin/sequelize","db:migrate", "npm", "start"]
-
+# run the project
+#CMD [ "node", "src/index.js" ]

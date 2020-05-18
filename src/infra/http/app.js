@@ -71,7 +71,12 @@ const createApp = ({
   app.use(bodyParserJsonError());
 
   app.use('/users', usersRoute);
-  app.get('/', (req, res) => res.sendStatus(200));
+  app.get('/', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+
+    // Send the response body as "Hello World"
+    res.end('Node boilerplate!!\n');
+  });
 
   app.use(notFoundRoute);
   app.use(uriErrorRoute);

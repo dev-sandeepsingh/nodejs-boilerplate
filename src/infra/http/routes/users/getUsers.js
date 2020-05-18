@@ -1,4 +1,10 @@
-const { toApiResponse } = require('../../utils/response.js');
+const {
+  toApiResponse,
+  ApiError,
+  errorCodes: { notFoundErrorCode },
+} = require('../../utils/response.js');
+
+const { JobNotFoundError } = require('../../../../common/errors.js');
 
 const createGetUsersRoute = ({
   router,
@@ -16,12 +22,23 @@ const createGetUsersRoute = ({
   router.get(
     '/getUsers',
     toApiResponse(async () => {
-      const users = await getUsers();
+      try {
+        const users = await getUsers();
 
-      return {
-        status: 200,
-        data: users,
-      };
+        return {
+          status: 200,
+          data: users,
+        };
+      } catch (error) {
+        if (error instanceof JobNotFoundError) {
+          throw new ApiError({
+            status: 404,
+            code: notFoundErrorCode,
+            message: 'User not found.',
+          });
+        }
+        throw error;
+      }
     }),
   );
 
