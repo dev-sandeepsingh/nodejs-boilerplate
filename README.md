@@ -10,7 +10,7 @@
 #### Basic Requirements
 
 - Node (12.x.x)
-- PostgreSQL 9+
+- PostgreSQL 12.x (We are using latest version in docker)
 - docker and docker-compose
 - Git
 
