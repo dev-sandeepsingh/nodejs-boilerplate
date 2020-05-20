@@ -12,6 +12,7 @@ const createAddUserRoute = ({
   core: {
     userCore: { addUser },
   },
+  bruteforce,
 }) => {
   /**
    * @api {post} /user/addUser Add user
@@ -23,6 +24,7 @@ const createAddUserRoute = ({
    */
   router.post(
     '/addUser',
+    bruteforce.getMiddleware({ key: '/users/addUser' }),
     [check.body('email').isEmail()],
     validateInput,
     toApiResponse(async ({ body: { email } }) => {

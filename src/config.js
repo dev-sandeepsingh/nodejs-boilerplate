@@ -16,6 +16,9 @@ const config = {
     },
     origin: 'http://localhost:8080',
     redisUrl: 'redis://localhost:6381',
+    ff: {
+      httpBruteProtection: true,
+    },
   },
   test: {
     port: 3000,
@@ -25,6 +28,9 @@ const config = {
       origin: [],
     },
     redisUrl: 'redis://localhost:6380',
+    ff: {
+      httpBruteProtection: false,
+    },
   },
   production: {
     port: process.env.PORT || 8080,
@@ -39,6 +45,9 @@ const config = {
       password: process.env.DOCS_PASSWORD,
     },
     redisUrl: process.env.REDIS_URL,
+    ff: {
+      httpBruteProtection: true,
+    },
   },
 };
 

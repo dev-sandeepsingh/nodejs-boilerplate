@@ -12,6 +12,7 @@ const { createApplication } = require('../../application/index.js');
 const { createNotFoundRoute } = require('./routes/not-found.js');
 const { createUriErrorRoute } = require('./routes/uri-error.js');
 const { createErrorRoute } = require('./routes/error.js');
+const { createBruteforce } = require('./utils/bruteforce.js');
 
 const createApp = ({
   reportError,
@@ -28,12 +29,12 @@ const createApp = ({
   };
 
   const app = express();
-
+  const bruteforce = createBruteforce({ sequelize, reportError });
   const notFoundRoute = createNotFoundRoute();
   const uriErrorRoute = createUriErrorRoute();
   const errorRoute = createErrorRoute({ reportError });
 
-  const usersRoute = createUsersRoute({ core, application });
+  const usersRoute = createUsersRoute({ core, application, bruteforce });
 
   if (config.docs.username && config.docs.password) {
     app.use('/docs', [
