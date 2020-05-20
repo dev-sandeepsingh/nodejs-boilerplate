@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-// const cors = require('cors');
+const cors = require('cors');
 const httpAuth = require('express-http-auth');
 const bodyParser = require('body-parser');
 const bodyParserJsonError = require('express-body-parser-json-error');
@@ -20,6 +20,7 @@ const createApp = ({
   sequelize = {},
   application = {},
   core,
+  config: { cors: { origin: corsOrigin } } = config,
 }) => {
   core = core || createCore({ sequelize }); // eslint-disable-line no-param-reassign
   // eslint-disable-next-line no-param-reassign
@@ -34,7 +35,12 @@ const createApp = ({
   const uriErrorRoute = createUriErrorRoute();
   const errorRoute = createErrorRoute({ reportError });
 
-  const usersRoute = createUsersRoute({ core, application, bruteforce });
+  const usersRoute = createUsersRoute({
+    core,
+    application,
+    bruteforce,
+    config,
+  });
 
   if (config.docs.username && config.docs.password) {
     app.use('/docs', [
@@ -53,15 +59,13 @@ const createApp = ({
   }
   app.use('/docs', express.static(path.resolve(__dirname, '../../../apidoc')));
 
-  // app.use(
-  //   cors({
-  //     origin: corsOrigin,
-  //     methods: ['POST', 'GET', 'PATCH', 'DELETE'],
-  //     allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
-  //     exposedHeaders: ['X-CSRF-Token'],
-  //     credentials: true,
-  //   }),
-  // );
+  app.use(
+    cors({
+      origin: corsOrigin,
+      methods: ['POST', 'GET', 'PATCH', 'DELETE', 'PUT'],
+      exposedHeaders: ['Content-Length', 'x-access-token'],
+    }),
+  );
 
   const isProd = process.env.NODE_ENV === 'production';
   if (isProd) {

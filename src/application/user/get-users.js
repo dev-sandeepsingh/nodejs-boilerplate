@@ -3,9 +3,19 @@ const createGetUsers = ({
     models: { User },
   },
 }) => {
-  const getUsers = async () => {
-    const users = await User.findAll();
-    return users;
+  const getUsers = async ({ page, perPage, sort, orderBy }) => {
+    const offset = (page - 1) * perPage;
+    const limit = perPage;
+
+    return User.findAndCountAll({
+      raw: true,
+      limit,
+      offset,
+      order: [
+        [sort, orderBy],
+        ['email', 'desc'],
+      ],
+    });
   };
 
   return getUsers;

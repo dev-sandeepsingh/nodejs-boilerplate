@@ -1,16 +1,14 @@
-const {
-  toApiResponse,
-  ApiError,
-  errorCodes: { notFoundErrorCode },
-} = require('../../utils/response.js');
+const check = require('express-validator');
 
-const { JobNotFoundError } = require('../../../../common/errors.js');
+const { toApiResponse } = require('../../utils/response.js');
+const { toPagination } = require('../../utils/pagination.js');
 
 const createGetUsersRoute = ({
   router,
   application: {
     users: { getUsers },
   },
+  config: { origin },
 }) => {
   /**
    * @api {get} /users/getUsers Get users
@@ -21,24 +19,40 @@ const createGetUsersRoute = ({
    */
   router.get(
     '/getUsers',
-    toApiResponse(async () => {
-      try {
-        const users = await getUsers();
+    [
+      check
+        .query('perPage')
+        .isInt({ min: 1, max: 100 })
+        .toInt()
+        .optional(),
+      check
+        .query('page')
+        .isInt({ min: 1 })
+        .toInt()
+        .optional(),
+      check
+        .query('sort')
+        .isString()
+        .isIn(['email'])
+        .optional(),
+      check
+        .query('orderBy')
+        .isString()
+        .isIn(['desc', 'asc'])
+        .optional(),
+    ],
+    toApiResponse(async req => {
+      const {
+        query: { perPage = 100, page = 1, sort = 'email', orderBy = 'desc' },
+      } = req;
+      const { rows, count } = await getUsers({
+        page,
+        perPage,
+        sort,
+        orderBy,
+      });
 
-        return {
-          status: 200,
-          data: users,
-        };
-      } catch (error) {
-        if (error instanceof JobNotFoundError) {
-          throw new ApiError({
-            status: 404,
-            code: notFoundErrorCode,
-            message: 'User not found.',
-          });
-        }
-        throw error;
-      }
+      return toPagination(req, rows, count, origin);
     }),
   );
 
