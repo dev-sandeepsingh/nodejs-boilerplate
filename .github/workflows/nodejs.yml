@@ -1,39 +1,27 @@
-version: "1.0"
-stages:
-  - prepare
-  - build
-  - test
-steps:
-  main_clone:
-    type: "git-clone"
-    description: "Cloning main repository..."
-    repo: "codefreshdemo/example_nodejs_postgres"
-    revision: "master"
-    git: github
-    stage: prepare
-  run_integration_tests:
-    title: "Running integration tests"
-    stage: test
-    image: node:6.9.1
-    environment: &test_postgresql_vars
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=todo
-    commands:
-      # PostgreSQL is certainly up at this point
-         - npm install -g gulp
-         - npm install
-         - npm test
-    services:
-      composition:
-        postgres:
-          image: postgres:11.5
-          ports:
-            - 5436
-          environment: *test_postgresql_vars # Same POSTGRES_USER, POSTGRES_PASSWORD etc.
-      readiness:
-        timeoutSeconds: 30
-        periodSeconds: 15
-        image: postgres:11.5
-        commands:
-          - "pg_isready -h postgres"
+name: Node CI
+
+on: [push]
+
+jobs:  
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build
+      run: |
+        npm ci
+        npm run build --if-present        
+      env:
+        CI: true
+    - name: Test
+      run: docker-compose up --exit-code-from web
