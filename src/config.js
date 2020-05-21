@@ -15,7 +15,7 @@ const config = {
       password: 'dev',
     },
     origin: 'http://localhost:8080',
-    redisUrl: 'redis://localhost:6381',
+    redisUrl: 'redis://192.38.1.3:6388',
     ff: {
       httpBruteProtection: true,
     },
@@ -27,7 +27,7 @@ const config = {
     cors: {
       origin: [],
     },
-    redisUrl: 'redis://localhost:6380',
+    redisUrl: 'redis://192.38.1.4:6381',
     ff: {
       httpBruteProtection: false,
     },

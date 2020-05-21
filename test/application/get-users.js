@@ -31,7 +31,12 @@ describe('Users#getUsers', () => {
   after(() => sequelize.close());
 
   it('returns the list of users', async () => {
-    const users = await getUsers();
-    assert.equal(users.length, 2);
+    const { count } = await getUsers({
+      page: 1,
+      perPage: 10,
+      sort: 'email',
+      orderBy: 'desc',
+    });
+    assert.equal(count, 2);
   });
 });

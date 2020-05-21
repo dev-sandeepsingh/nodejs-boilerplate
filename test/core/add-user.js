@@ -3,7 +3,7 @@ const assert = require('assert');
 const path = require('path');
 const sequelizeFixtures = require('sequelize-fixtures');
 const faker = require('faker');
-const { UniqueConstraintError } = require('sequelize');
+const { EmailAlreadyExistsError } = require('../../src/common/errors.js');
 const { createSequelize } = require('../../src/infra/sequelize/index.js');
 const { createCore } = require('../../src/core/index.js');
 
@@ -35,7 +35,7 @@ describe('Users#createUser', () => {
       const email = faker.internet.email();
       await addUser({ email });
       await addUser({ email });
-    }, UniqueConstraintError));
+    }, EmailAlreadyExistsError));
 
   it('Add user', async () => {
     const email = faker.internet.email();
