@@ -24,4 +24,6 @@ jobs:
       env:
         CI: true
     - name: Test
-      run: docker-compose up --exit-code-from web
+      run: |
+        docker-compose up --exit-code-from web
+        npm test
