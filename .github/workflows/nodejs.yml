@@ -45,4 +45,8 @@ jobs:
       run: npm test
 
     - name: Deploy to heroku
-      run: git push --force https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/heroku:${{ secrets.HEROKU_APP_NAME }}.git HEAD:refs/heads/master
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+
+      run: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/heroku:$HEROKU_APP_NAME.git HEAD:refs/heads/master
