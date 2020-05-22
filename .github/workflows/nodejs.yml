@@ -43,3 +43,6 @@ jobs:
         CI: true
     - name: Test
       run: npm test
+
+    - name: Deploy to heroku
+      command: git push --force https://heroku:0b3b53b7-8936-443b-b3ac-ccde7cf3557d@git.heroku.com/uat-nodejs-boilerplate.git HEAD:refs/heads/master  
