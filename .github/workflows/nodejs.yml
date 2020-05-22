@@ -29,9 +29,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Check rejected commits
-      command: wget https://api.reviewee.it/repository/roche_ventana-api/haveRejectedCommits -q -O - | grep -q  \"success\":true
+      run: wget https://api.reviewee.it/repository/roche_ventana-api/haveRejectedCommits -q -O - | grep -q  \"success\":true
       
-    - checkout    
     - name: npm install, build
       run: |
         npm ci
