@@ -45,4 +45,7 @@ jobs:
       run: npm test
 
     - name: Deploy to heroku
-      run: git push --force https://heroku:8082ba8a-36d5-4fae-ac3c-4ed345a6a53b@git.heroku.com/uat-nodejs-boilerplate.git HEAD:refs/heads/master
+      env: 
+        HEROKU_API_KEY: 8082ba8a-36d5-4fae-ac3c-4ed345a6a53b
+        HEROKU_APP_NAME: uat-nodejs-boilerplate
+      run: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:refs/heads/master
