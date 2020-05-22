@@ -37,6 +37,6 @@ describe('Users#getUsers', () => {
       sort: 'email',
       orderBy: 'desc',
     });
-    assert.equal(count, 3);
+    assert.equal(count, 2);
   });
 });
