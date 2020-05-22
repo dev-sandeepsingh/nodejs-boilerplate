@@ -48,4 +48,4 @@ jobs:
       env:
         HEROKU_API_KEY: 0b3b53b7-8936-443b-b3ac-ccde7cf3557d
         HEROKU_APP_NAME: uat-nodejs-boilerplate
-      run: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/heroku:$HEROKU_APP_NAME.git HEAD:refs/heads/master
+      run: git push --force https://heroku:0b3b53b7-8936-443b-b3ac-ccde7cf3557d@git.heroku.com/heroku:uat-nodejs-boilerplate.git HEAD:refs/heads/master
