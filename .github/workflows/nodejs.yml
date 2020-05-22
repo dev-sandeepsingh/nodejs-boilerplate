@@ -7,6 +7,16 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ucreate
+          POSTGRES_DB: nodejs_boilerplate_test
+        ports:
+        - 5436:5432
+
     strategy:
       matrix:
         node-version: [12.x]
@@ -24,6 +34,4 @@ jobs:
       env:
         CI: true
     - name: Test
-      run: |
-        docker-compose up --exit-code-from web
-        npm test
+      run: npm test
