@@ -12,10 +12,10 @@ const operatorsAliases = Op; // https://github.com/sequelize/sequelize/issues/84
 
 const config = {
   development: {
-    url: process.env.TEST_DATABASE_URL,
-    sync: false,
+    url: process.env.DATABASE_URL,
+    sync: true,
     logging: text => console.log(highlightSql(format(text))), // eslint-disable-line no-console,
-    ssl: false,
+    ssl: true,
     dialectOptions: {
       ssl: yn(process.env.DATABASE_SSL),
     },
