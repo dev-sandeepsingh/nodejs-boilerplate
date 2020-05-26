@@ -70,25 +70,10 @@ jobs:
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       run: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:refs/heads/master
 
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2.0.2
-      if: success()
+    - name: Slack notification
       env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: '#3278BD'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Successed :rocket:'
-        SLACK_TITLE: Build status
-        SLACK_USERNAME: rtCamp
-        SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2.0.2
-      if: failure()
-      env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: '#3278BD'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Failed :x:'
-        SLACK_TITLE: Build status
-        SLACK_USERNAME: rtCamp
-        SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}    
+        WEBHOOK_URL: ${{ secrets.SLACK_BOT_TOKEN }}
+        MESSAGE: 'Custom message'.
+        USERNAME: ThisIsMyUsername # Optional.
+        CHANNEL: general - Slack channel # Optional.
+      uses: svikramjeet/git-actions@master
