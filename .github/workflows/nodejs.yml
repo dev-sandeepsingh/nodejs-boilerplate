@@ -74,7 +74,7 @@ jobs:
       if: success()
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: sandeep/action-slack-notify@v2.0.2
+      uses: rtCamp/action-slack-notify@v2.0.2
       with:
         channel: general
         status: SUCCESS
@@ -84,7 +84,7 @@ jobs:
       if: failure()
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: sandeep/action-slack-notify@v2.0.2
+      uses: rtCamp/action-slack-notify@v2.0.2
       with:
         channel: general
         status: FAILED
