@@ -83,7 +83,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2.0.2
-      if: success()
+      if: failure()
       env:
         SLACK_CHANNEL: general
         SLACK_COLOR: '#3278BD'
