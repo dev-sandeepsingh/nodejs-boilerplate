@@ -58,7 +58,7 @@ jobs:
       env:        
         POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
         POSTMAN_COLLECTION_ID: ${{ secrets.POSTMAN_COLLECTION_ID }}
-        POSTMAN_ENV_ID: ${{ secrets.POSTMAN_ENV_ID }}
+        POSTMAN_ENV_ID2: ${{ secrets.POSTMAN_ENV_ID }}
       run: newman run https://api.getpostman.com/collections/$POSTMAN_COLLECTION_ID?apikey=$POSTMAN_API_KEY -e https://api.getpostman.com/environments/$POSTMAN_ENV_ID?apikey=$POSTMAN_API_KEY
 
     - name: Test
@@ -77,8 +77,8 @@ jobs:
         SLACK_CHANNEL: general
         SLACK_COLOR: '#3278BD'
         SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Post Content :rocket:'
-        SLACK_TITLE: Post successed
+        SLACK_MESSAGE: 'Successed :rocket:'
+        SLACK_TITLE: Build status
         SLACK_USERNAME: rtCamp
         SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}
     - name: Slack Notification
@@ -88,7 +88,7 @@ jobs:
         SLACK_CHANNEL: general
         SLACK_COLOR: '#3278BD'
         SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Post Content :rocket:'
-        SLACK_TITLE: Build failed
+        SLACK_MESSAGE: 'Failed :x:'
+        SLACK_TITLE: Build status
         SLACK_USERNAME: rtCamp
         SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}    
