@@ -46,6 +46,9 @@ jobs:
       run: npm run lint
 
     - name: Deploy to heroku dev
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_DEV_APP_NAME: ${{ secrets.HEROKU_DEV_APP_NAME }}
       run: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_DEV_APP_NAME.git HEAD:refs/heads/master
   
     - name: Install newman
