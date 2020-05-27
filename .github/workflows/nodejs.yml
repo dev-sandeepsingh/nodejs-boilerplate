@@ -54,5 +54,6 @@ jobs:
         USERNAME: ThisIsMyUsername 
         CHANNEL: general
         WEBHOOK_URL: ${{ secrets.SLACK_BOT_TOKEN }}
+        ICON: icon
       uses: svikramjeet/git-actions@master
       
