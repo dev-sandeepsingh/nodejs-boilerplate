@@ -42,16 +42,53 @@ jobs:
       env:
         CI: true
 
+    - name: Check code quality
+      run: npm run lint
+
+    - name: Deploy to heroku dev
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_DEV_APP_NAME: ${{ secrets.HEROKU_DEV_APP_NAME }}
+      run: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_DEV_APP_NAME.git HEAD:refs/heads/master
+  
+    - name: Install newman
+      run: sudo npm install -g newman
+
+    - name: API tests
+      env:        
+        POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+        POSTMAN_COLLECTION_ID: ${{ secrets.POSTMAN_COLLECTION_ID }}
+        POSTMAN_ENV_ID: ${{ secrets.POSTMAN_ENV_ID }}
+      run: newman run https://api.getpostman.com/collections/$POSTMAN_COLLECTION_ID?apikey=$POSTMAN_API_KEY -e https://api.getpostman.com/environments/$POSTMAN_ENV_ID?apikey=$POSTMAN_API_KEY
+
+    - name: Test
+      run: npm test
+
     - name: Deploy to heroku
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       run: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:refs/heads/master
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2.0.2
+      if: success()
+      env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: '#3278BD'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_MESSAGE: 'Successed :rocket:'
+        SLACK_TITLE: Build status
+        SLACK_USERNAME: rtCamp
+        SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2.0.2
+      if: failure()
+      env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: '#3278BD'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_MESSAGE: 'Failed :x:'
+        SLACK_TITLE: Build status
+        SLACK_USERNAME: rtCamp
+        SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}  
 
-    - name: Slack notification      
-      env:        
-        MESSAGE: Custom message
-        CHANNEL: general
-        WEBHOOK_URL: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: svikramjeet/git-actions@master
-      
