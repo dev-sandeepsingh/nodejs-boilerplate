@@ -72,7 +72,7 @@ jobs:
     - name: Slack notification
       env:
         WEBHOOK_URL: ${{ secrets.SLACK_BOT_TOKEN }}
-        MESSAGE: 'Custom message'.
+        MESSAGE: Custom message
         USERNAME: ThisIsMyUsername # Optional.
         CHANNEL: general - Slack channel # Optional.
       uses: svikramjeet/git-actions@master
