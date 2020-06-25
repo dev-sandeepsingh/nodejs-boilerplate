@@ -74,26 +74,20 @@ jobs:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       run: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:refs/heads/master
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2.0.2
+    - name: Slack notification
       if: success()
       env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: '#3278BD'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Successed :rocket:'
-        SLACK_TITLE: Build status
-        SLACK_USERNAME: rtCamp
-        SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2.0.2
+        WEBHOOK_URL: ${{ secrets.SLACK_BOT_TOKEN }}
+        MESSAGE: Build succeed
+        USERNAME: ucreate
+        CHANNEL: general
+      uses: svikramjeet/git-actions@master
+    - name: Slack notification
       if: failure()
       env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: '#3278BD'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Failed :x:'
-        SLACK_TITLE: Build status
-        SLACK_USERNAME: rtCamp
-        SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}  
+        WEBHOOK_URL: ${{ secrets.SLACK_BOT_TOKEN }}
+        MESSAGE: Build failure
+        USERNAME: ucreate
+        CHANNEL: general
+      uses: svikramjeet/git-actions@master  
 
