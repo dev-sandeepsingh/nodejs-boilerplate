@@ -61,6 +61,9 @@ jobs:
         POSTMAN_ENV_ID: ${{ secrets.POSTMAN_ENV_ID }}
       run: newman run https://api.getpostman.com/collections/$POSTMAN_COLLECTION_ID?apikey=$POSTMAN_API_KEY -e https://api.getpostman.com/environments/$POSTMAN_ENV_ID?apikey=$POSTMAN_API_KEY
 
+    - name: Test
+      run: npm test
+
     - name: Deploy to heroku
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
