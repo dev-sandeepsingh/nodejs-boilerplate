@@ -15,7 +15,7 @@ const config = {
     url: process.env.DATABASE_URL,
     sync: true,
     logging: text => console.log(highlightSql(format(text))), // eslint-disable-line no-console,
-    ssl: true,
+    ssl: yn(process.env.DATABASE_SSL),
     dialectOptions: {
       ssl: yn(process.env.DATABASE_SSL),
     },
