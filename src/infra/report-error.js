@@ -1,5 +1,5 @@
-const { rollbarAccessToken, reportErrorRequest } = require('../config.js');
 const Rollbar = require('rollbar');
+const { rollbarAccessToken, reportErrorRequest } = require('../config.js');
 
 const reporter = rollbarAccessToken
   ? new Rollbar({

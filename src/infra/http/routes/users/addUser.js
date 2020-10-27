@@ -2,11 +2,17 @@ const check = require('express-validator');
 const { validateInput } = require('../../utils/validate-input.js');
 const {
   toApiResponse,
+  ApiError,
+  errorCodes: { emailAlreadyExistsErrorCode },
 } = require('../../utils/response.js');
+const { EmailAlreadyExistsError } = require('../../../../common/errors.js');
 
 const createAddUserRoute = ({
   router,
-  core: { userCore: { addUser } }
+  core: {
+    userCore: { addUser },
+  },
+  bruteforce,
 }) => {
   /**
    * @api {post} /user/addUser Add user
@@ -18,27 +24,25 @@ const createAddUserRoute = ({
    */
   router.post(
     '/addUser',
-    [
-      check
-        .body('email')
-        .isEmail(),
-    ],
+    bruteforce.getMiddleware({ key: '/users/addUser' }),
+    [check.body('email').isEmail()],
     validateInput,
-    toApiResponse(
-      async ({
-        body: { email },
-      }) => {
-        try {
-          await addUser({
-            email,
-          });
+    toApiResponse(async ({ body: { email } }) => {
+      try {
+        await addUser({ email });
 
-          return { status: 204, data: null };
-        } catch (error) {
-          throw error;
+        return { status: 204, data: null };
+      } catch (error) {
+        if (error instanceof EmailAlreadyExistsError) {
+          throw new ApiError({
+            status: 422,
+            code: emailAlreadyExistsErrorCode,
+            message: 'Email already exists.',
+          });
         }
-      },
-    ),
+        throw error;
+      }
+    }),
   );
 
   return router;

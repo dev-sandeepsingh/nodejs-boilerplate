@@ -1,8 +1,6 @@
 const { createUser } = require('./user/index.js');
 
-const createApplication = ({
-  sequelize,  
-}) => {  
+const createApplication = ({ sequelize }) => {
   const users = createUser({
     sequelize,
   });

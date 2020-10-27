@@ -37,6 +37,24 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
+# docker postgres dev volume
+postgres
+
+# docker pgadmin dev volume
+pgadmin
+
+# docker redis dev volume
+redis
+
+# exclude vs code
+.vscode
+# containers for local development
+# docker-compose.yml
+
+# API docs generated with apidoc
+apidoc/*
+!apidoc/description.html
+
 # Dependency directories
 node_modules/
 jspm_packages/
@@ -68,6 +86,10 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+# API docs generated with apidoc
+apidoc/*
+!apidoc/description.html
+
 # dotenv environment variables file
 .env
 .env.test
@@ -76,15 +98,13 @@ typings/
 .cache
 
 # Next.js build output
-.next
+.next.vscode
 
 # Nuxt.js build / generate output
 .nuxt
 dist
 
-# Gatsby files
-.cache/
-# Comment in the public line in if your project uses Gatsby and *not* Next.js
+# Gatsby files.vscodepublic line in if your project uses Gatsby and *not* Next.js
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
 

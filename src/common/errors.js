@@ -1,3 +1,4 @@
+/* eslint-disable  max-classes-per-file */
 class AppError extends Error {
   constructor({ details = {}, message } = {}) {
     super(message || details.message);
@@ -7,9 +8,9 @@ class AppError extends Error {
   }
 }
 
-class DemoError extends AppError {}
+class EmailAlreadyExistsError extends AppError {}
 
 module.exports = {
   AppError,
-  DemoError,
+  EmailAlreadyExistsError,
 };

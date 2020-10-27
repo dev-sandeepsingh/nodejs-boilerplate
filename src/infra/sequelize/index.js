@@ -10,8 +10,7 @@ const createSequelize = async ({
   operatorsAliases,
   ssl,
   dialectOptions,
-} = config) => {  
-
+} = config) => {
   // initialize the connection
   const sequelize = new Sequelize(url, {
     dialect: 'postgres',
@@ -23,7 +22,6 @@ const createSequelize = async ({
 
   // create models
   const User = createUserModel(sequelize, Sequelize);
-  
 
   const models = {
     User,
@@ -44,7 +42,16 @@ const createSequelize = async ({
   return {
     db: sequelize,
     models,
-    close: () => sequelize.connectionManager.close(),    
+    close: () => sequelize.connectionManager.close(),
+    truncate: async () => {
+      await User.truncate({ cascade: true });
+      await Promise.all(
+        Object.values(models)
+          // truncating HC and Driver (with a cascade) in parallel introduces deadlocks,
+          .filter(m => ![User].includes(m))
+          .map(model => model.truncate({ cascade: true })),
+      );
+    },
   };
 };
 

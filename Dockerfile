@@ -1,4 +1,6 @@
-FROM node
+# Use the official lightweight Node.js 12 image.
+# https://hub.docker.com/_/node
+FROM node:12-slim
 
 # Create and change to the app directory.
 WORKDIR /usr/src/app
@@ -14,14 +16,5 @@ RUN npm install --only=production
 # Copy local code to the container image.
 COPY . ./
 
-ENV NODE_ENV "production"
-
-ENTRYPOINT ["/usr/src/app/node_modules/.bin/sequelize","db:migrate"]
-
 # Run the web service on container startup.
 CMD [ "npm", "start" ]
-
-
-
-# ENTRYPOINT ["/usr/src/app/node_modules/.bin/sequelize","db:migrate", "npm", "start"]
-

@@ -1,7 +1,5 @@
 const AWS = require('aws-sdk');
-const {
-  FailedToCopyFileError,
-} = require('../common/errors');
+const { FailedToCopyFileError } = require('../common/errors');
 const { s3: config, origin } = require('../config');
 
 const buildTmpKey = key => `tmp/${key}`;
@@ -10,7 +8,7 @@ const isTmpKey = key => /^tmp\//.test(key);
 
 const getKeyFromTmpKey = tmpKey => tmpKey.replace(/^tmp\//, '');
 
-const getReceiptPhotoUrlFromKey = key => `${origin}/${key}`
+const getReceiptPhotoUrlFromKey = key => `${origin}/${key}`;
 
 const createFileService = ({ s3Config } = { s3Config: config }) => {
   const s3 = new AWS.S3(s3Config);
@@ -128,7 +126,5 @@ module.exports = {
   buildTmpKey,
   isTmpKey,
   getKeyFromTmpKey,
-  buildReceiptPhotoKey,
   getReceiptPhotoUrlFromKey,
-  isReceiptPhotoUrl,
 };

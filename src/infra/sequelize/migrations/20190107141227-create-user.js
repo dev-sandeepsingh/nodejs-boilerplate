@@ -11,7 +11,7 @@ module.exports = {
         type: STRING,
         allowNull: false,
         unique: true,
-      },      
+      },
     }),
   down: queryInterface => queryInterface.dropTable('User'),
 };

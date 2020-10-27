@@ -1,25 +1,32 @@
-//require('newrelic');
+// require('newrelic');
 
 const { port } = require('./config');
 const { createSequelize } = require('./infra/sequelize');
 const { createApp } = require('./infra/http/app');
 const { reportError } = require('./infra/report-error');
+const { Queue } = require('./common/queue.js');
 
 (async () => {
   const sequelize = await createSequelize();
+  const queue = Queue();
+
   const app = createApp({
     reportError,
     sequelize,
+    queue,
   });
 
   const server = app.listen(port, () => {
-    console.info(`Listening on ${port}`); // eslint-disable-line no-console    
+    console.info(`Listening on ${port}`); // eslint-disable-line no-console
   });
 
   const cleanUp = async () => {
     try {
-      await sequelize.close();
-      await server.close();
+      await Promise.all([
+        await sequelize.close(),
+        queue.close(),
+        await server.close(),
+      ]);
       process.exit(0);
     } catch (err) {
       process.exit(1);
@@ -28,5 +35,4 @@ const { reportError } = require('./infra/report-error');
 
   process.on('SIGINT', cleanUp);
   process.on('SIGTERM', cleanUp);
-
 })();
