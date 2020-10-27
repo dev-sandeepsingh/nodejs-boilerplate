@@ -83,6 +83,26 @@ const createApp = ({
     res.end('Node boilerplate!!\n');
   });
 
+  app.get('/jd', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+
+    // Send the response body as "Hello World"
+    res.end('Node boilerplate!!\n');
+  });
+
+
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'ejs'); 
+
+  app.get('/admin/login', (req, res) => {
+    //res.writeHead(200, { 'Content-Type': 'text/plain' });
+
+    // Send the response body as "Hello World"
+    //res.end('Node boilerplate!!\n');
+    res.render('admin/login');
+  });
+
+
   app.use(notFoundRoute);
   app.use(uriErrorRoute);
   app.use(errorRoute);
