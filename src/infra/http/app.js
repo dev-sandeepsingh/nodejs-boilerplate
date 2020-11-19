@@ -4,7 +4,7 @@ const cors = require('cors');
 const httpAuth = require('express-http-auth');
 const bodyParser = require('body-parser');
 const bodyParserJsonError = require('express-body-parser-json-error');
-var expressLayouts = require('express-ejs-layouts');
+const expressLayouts = require('express-ejs-layouts');
 
 const config = require('../../config.js');
 
