@@ -4,6 +4,8 @@ const cors = require('cors');
 const httpAuth = require('express-http-auth');
 const bodyParser = require('body-parser');
 const bodyParserJsonError = require('express-body-parser-json-error');
+var expressLayouts = require('express-ejs-layouts');
+
 const config = require('../../config.js');
 
 const { createUsersRoute } = require('./routes/users/index.js');
@@ -82,26 +84,15 @@ const createApp = ({
     // Send the response body as "Hello World"
     res.end('Node boilerplate!!\n');
   });
-
-  app.get('/jd', (req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-
-    // Send the response body as "Hello World"
-    res.end('Node boilerplate!!\n');
-  });
-
-
+  app.use(expressLayouts);
   app.set('views', path.join(__dirname, 'views'));
-  app.set('view engine', 'ejs'); 
-
+  app.set('view engine', 'ejs');
   app.get('/admin/login', (req, res) => {
-    //res.writeHead(200, { 'Content-Type': 'text/plain' });
-
-    // Send the response body as "Hello World"
-    //res.end('Node boilerplate!!\n');
     res.render('admin/login');
   });
-
+  app.get('/admin', (req, res) => {
+    res.render('admin/dashboard', { title: 'The index page!' });
+  });
 
   app.use(notFoundRoute);
   app.use(uriErrorRoute);
